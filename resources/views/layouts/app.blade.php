@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Sweet alerts 2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
 <body>
     <div id="app">
@@ -79,5 +83,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('js')
+    <script src="sweetalert2.all.min.js"></script>
 </body>
 </html>

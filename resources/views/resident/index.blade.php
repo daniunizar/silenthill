@@ -4,7 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Residentes</h1>
+            <div class="row">
+                <div class="col-8">
+                    <h1>Resident</h1>
+                </div>
+                <div class="col-4 text-end">
+                    <a class="btn btn-success" href="{{route('residents.create')}}">New resident <i class="bi bi-plus-circle" title="New resident"></i></a>
+                </div>
+            </div>
             <hr/>
             <table class="table table-success table-striped">
                 <thead>
@@ -13,23 +20,25 @@
                         <th scope="col">Name</th>
                         <th scope="col">Lastname</th>
                         <th scope="col">DNI</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col" colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    if($residents != null)
-                    @foreach($residents as $counter=>resident)
+                    @if($residents != null)
+                    @foreach($residents as $resident)
                     <tr>
-                        <th scope="row">$counter</th>
-                        <td>$resident->name</td>
-                        <td>$resident->lastname</td>
-                        <td>$resident->dni</td>
+                        <th scope="row">{{$loop->iteration}}</th>
+                        <td>{{$resident->name}}</td>
+                        <td>{{$resident->lastname}}</td>
+                        <td>{{$resident->dni}}</td>
                         <td>
-                            <a href="{{route('residents.edit', $resident->id)}}"><i class="bi bi-pen" title="Edit"></i></a>
+                            <a class="btn btn-warning" href="{{route('residents.edit', $resident->id)}}"><i class="bi bi-pen" title="Edit"></i></a>
+                        </td>
+                        <td>
                             <form action="{{route('residents.destroy', $resident)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"><i class="bi bi-trash" title="Delete"></i></button>
+                                <button class="btn btn-danger" type="submit"><i class="bi bi-trash" title="Delete"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -39,8 +48,52 @@
                     @endif
                 </tbody>
             </table>
-            <a href="{{route('residents.create')}}"><i class="bi bi-plus-circle" title="New resident"></i></a>
         </div>
     </div>
 </div>
 @endsection
+@if(session('created')=='ok')
+    @section('js')
+        <script>
+            Swal.fire({
+            title: 'Success!',
+            text: 'A new resident has been registered',
+            icon: 'success',
+            confirmButtonText: 'Cool'
+            })
+        </script>
+    @endsection
+@elseif(session('updated')=='ok')
+    @section('js')
+        <script>
+            Swal.fire({
+            title: 'Success!',
+            text: 'The resident has been updated',
+            icon: 'success',
+            confirmButtonText: 'Cool'
+            })
+        </script>
+    @endsection
+@elseif(session('deleted')=='ok')
+    @section('js')
+        <script>
+            Swal.fire({
+            title: 'Success!',
+            text: 'The resident has been deleted',
+            icon: 'success',
+            confirmButtonText: 'Cool'
+            })
+        </script>
+    @endsection
+@elseif(session('deleted')=='ko')
+    @section('js')
+        <script>
+            Swal.fire({
+            title: 'Error!',
+            text: "The resident hasn't been deleted'",
+            icon: 'error',
+            confirmButtonText: 'Cool'
+            })
+        </script>
+    @endsection
+@endif

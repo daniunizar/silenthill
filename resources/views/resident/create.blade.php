@@ -4,8 +4,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>New Resident</h1>
-            <form>
+            <div class="row">
+                <div class="col-8">
+                    <h1>New Resident</h1>
+                </div>
+                <div class="col-4 text-end">
+                    <a class="btn btn-secondary" href="{{route('residents.index')}}">Back</a>
+                </div>
+            </div>
+            <form action="{{route('residents.store')}}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name">
@@ -19,20 +27,16 @@
                     <input type="text" class="form-control" id="dni" name="dni">
                 </div>
                 <div class="mb-3">
-                    <label for="borndate" class="form-label">Date of born</label>
-                    <input type="date" class="form-control" id="borndate" name="borndate">
+                    <label for="birthdate" class="form-label">Date of birth</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_male" checked>
-                    <label class="form-check-label" for="gender_male">
-                        Male
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_female">
-                    <label class="form-check-label" for="gender_female">
-                        Female
-                    </label>
+                <div class="mb-3">
+                    <label for="gender_id" class="form-label">Gender</label>
+                    <select id="gender_id" name="gender_id" class="form-select" aria-label="Default select example">
+                        @foreach($genders as $gender)
+                            <option value="{{$gender->id}}">{{$gender->concept}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -40,3 +44,15 @@
     </div>
 </div>
 @endsection
+@if(session('created')=='ko')
+    @section('js')
+        <script>
+            Swal.fire({
+            title: 'Error!',
+            text: 'A problen ocurred',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+            })
+        </script>
+    @endsection
+@endif

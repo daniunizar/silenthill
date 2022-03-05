@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('residents', function (Blueprint $table) {
+        Schema::create('genders', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("dni");
-            $table->string("lastname");
-            $table->date("birthdate");
-            $table->unsignedBigInteger("gender_id");//fk from genders(id)
+            $table->string('concept');
             $table->timestampsTz();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('residents');
+        Schema::dropIfExists('genders');
     }
 };
