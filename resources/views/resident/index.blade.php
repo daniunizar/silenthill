@@ -55,10 +55,10 @@
                             <a class="btn btn-warning" href="{{route('residents.edit', $resident->id)}}"><i class="bi bi-pen" title="Edit"></i></a>
                         </td>
                         <td>
-                            <form action="{{route('residents.destroy', $resident)}}" method="POST">
+                            <form id="deleteResidentForm" name="deleteResidentForm" action="{{route('residents.destroy', $resident)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger" type="submit"><i class="bi bi-trash" title="Delete"></i></button>
+                                <button class="btn btn-danger" type="button" onclick="deleteResident()"><i class="bi bi-trash" title="Delete"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -75,9 +75,34 @@
     </div>
 </div>
 @endsection
+@section('js')
+<script>
+    function deleteResident(){
+       event.preventDefault();
+        Swal.fire({
+          title: 'Are you sure about delete this Resident?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          denyButtonText: 'No',
+          customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-1 right-gap',
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#deleteResidentForm').submit();
+          } else if (result.isDenied) {
+            Swal.fire('Resident was not deleted', '', 'info')
+          }
+        })
 
-@if(session('created')=='ok')
-    @section('js')
+    }
+</script>
+
+    @if(session('created')=='ok')
         <script>
             Swal.fire({
             title: 'Success!',
@@ -86,38 +111,32 @@
             confirmButtonText: 'Cool'
             })
         </script>
-    @endsection
-@elseif(session('updated')=='ok')
-    @section('js')
+    @elseif(session('updated')=='ok')
         <script>
             Swal.fire({
-            title: 'Success!',
-            text: 'The resident has been updated',
-            icon: 'success',
-            confirmButtonText: 'Cool'
-            })
+                title: 'Success!',
+                text: 'The resident has been updated',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                })
         </script>
-    @endsection
-@elseif(session('deleted')=='ok')
-    @section('js')
+    @elseif(session('deleted')=='ok')
         <script>
             Swal.fire({
-            title: 'Success!',
-            text: 'The resident has been deleted',
-            icon: 'success',
-            confirmButtonText: 'Cool'
+                title: 'Success!',
+                text: 'The resident has been deleted',
+                icon: 'success',
+                confirmButtonText: 'Cool'
             })
         </script>
-    @endsection
-@elseif(session('deleted')=='ko')
-    @section('js')
+    @elseif(session('deleted')=='ko')
         <script>
             Swal.fire({
-            title: 'Error!',
-            text: "The resident hasn't been deleted'",
-            icon: 'error',
-            confirmButtonText: 'Cool'
+                title: 'Error!',
+                text: "The resident hasn't been deleted'",
+                icon: 'error',
+                confirmButtonText: 'Cool'
             })
-        </script>
-    @endsection
-@endif
+            </script>
+    @endif
+@endsection
