@@ -13,14 +13,20 @@
                 </div>
             </div>
             <hr/>
+            <div class="row">
+                <div class="col">
+                    <input type="text" id="resident_finder" name="resident_finder" placehorder="Search for DNI, name or lastname">
+                </div>
+            </div>
             <table class="table table-success table-striped">
+                <caption>Total of results: {{$residents->count()}}</caption>
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">DNI</th>
                         <th scope="col">Name</th>
                         <th scope="col">Lastname</th>
-                        <th scope="col">DNI</th>
-                        <th scope="col" colspan="2">Actions</th>
+                        <th scope="col" colspan="3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,9 +34,12 @@
                     @foreach($residents as $resident)
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
+                        <td>{{$resident->dni}}</td>
                         <td>{{$resident->name}}</td>
                         <td>{{$resident->lastname}}</td>
-                        <td>{{$resident->dni}}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{route('residents.show', $resident->id)}}"><i class="bi bi-person-rolodex" title="Detail"></i></a>
+                        </td>
                         <td>
                             <a class="btn btn-warning" href="{{route('residents.edit', $resident->id)}}"><i class="bi bi-pen" title="Edit"></i></a>
                         </td>
