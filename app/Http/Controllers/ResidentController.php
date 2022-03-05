@@ -104,4 +104,17 @@ class ResidentController extends Controller
         }
         return redirect()->route("residents.index")->with('deleted', 'ok');
     }
+
+    /**
+     * This function return the index view but only with residents of a search process
+     */
+    public function searchResult(Request $request)
+    {
+        $searchParam = $request->resident_finder;
+        $residents = Resident::where('dni', 'like', '%'.$searchParam.'%')
+        ->orWhere('name', 'like', '%'.$searchParam.'%')
+        ->orWhere('lastname', 'like', '%'.$searchParam.'%')
+        ->paginate(10);
+        return view("resident.index", ["residents"=>$residents])->with('keyword', $searchParam);
+    }
 }

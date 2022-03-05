@@ -14,4 +14,13 @@ class Resident extends Model
      * @var array
      */
     protected $guarded = [];
+    //Relationships
+    //One to Many Inverse
+    /**
+     * An resident have a gender
+     */
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
 }

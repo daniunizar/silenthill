@@ -15,10 +15,21 @@
             <hr/>
             <div class="row">
                 <div class="col">
-                    <input type="text" id="resident_finder" name="resident_finder" placehorder="Search for DNI, name or lastname">
+                    <form class="form-inline" action="{{route('residents.search')}}" method="POST">
+                        @csrf
+                        <div class="input-group">
+                            @if(isset($keyword))
+                            <input class="form-control" type="text" id="resident_finder" name="resident_finder" placeholder="Search for DNI, name or lastname" value="{{$keyword}}">
+                            @else
+                            <input class="form-control" type="text" id="resident_finder" name="resident_finder" placeholder="Search for DNI, name or lastname">
+                            @endif
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
                 </div>
             </div>
-            <table class="table table-success table-striped">
+            @if($residents!=null)
+            <table class="table table-success table-striped mt-3">
                 <caption>Total of results: {{$residents->count()}}</caption>
                 <thead>
                     <tr>
@@ -57,10 +68,14 @@
                     @endif
                 </tbody>
             </table>
+            @else
+                <p>No se han encontrado resultados</p>
+            @endif
         </div>
     </div>
 </div>
 @endsection
+
 @if(session('created')=='ok')
     @section('js')
         <script>

@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">Gender</th>
-                                <td>{{$resident->gender_id}}</td>
+                                <td>{{$resident->gender->concept}}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Created at</th>
