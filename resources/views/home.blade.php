@@ -28,6 +28,7 @@
                     @endif
 
                     <a href="{{route('residents.index')}}">Residents</a>
+                    <a href="{{route('contacts.index')}}">Contacts</a>
                 </div>
             </div>
         </div>

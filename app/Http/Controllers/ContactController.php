@@ -46,7 +46,7 @@ class ContactController extends Controller
             ])){
             return redirect()->route('contact.create')->with('created', 'An error has ocurred');
         }
-        return redirect()->route('contact.index')->with('created', 'New Contact has been registered');
+        return redirect()->route('contacts.index')->with('created', 'New Contact has been registered');
     }
 
     /**

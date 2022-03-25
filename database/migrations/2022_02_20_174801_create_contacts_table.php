@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string("name");
             $table->string("dni");
             $table->string("lastname");
-            $table->date("born_date");
+            $table->date("birthdate");
+            $table->unsignedBigInteger("gender_id");//fk from genders(id)
             $table->timestampsTz();        
         });
     }
