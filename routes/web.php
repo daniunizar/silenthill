@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('searchResult', [ContactController::class, 'searchResult'])->name('contacts.search');
 Route::post('searchResult', [ResidentController::class, 'searchResult'])->name('residents.search');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('residents', ResidentController::class)->names("residents");
