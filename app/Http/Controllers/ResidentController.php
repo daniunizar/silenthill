@@ -88,7 +88,7 @@ class ResidentController extends Controller
         if(!$resident->fill($input)->save()){
             return redirect()->back()->withErrors(['msg' => 'The Message']);
         }
-        return redirect()->route('residents.index')->with('updated', 'ok');
+        return redirect()->route('resident.index')->with('updated', 'ok');
     }
 
     /**
